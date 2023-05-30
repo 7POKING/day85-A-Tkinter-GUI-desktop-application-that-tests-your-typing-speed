@@ -1,0 +1,186 @@
+#測試待解決------------------------------------------------------------------------------------------------------------------------------------------
+
+#1. 嘗試從其他py匯入function
+# from timer_function import update_timer
+
+# time_left = 60
+
+# def update_timer(root, label):
+#     global time_left
+#     if time_left>0:
+#         time_left-=1
+#         label.config(text=time_left)
+#         root.after(1000, update_timer(root=root, label=label))
+#     else:
+#         label.config(text="Time's Up!!!")
+
+
+# update_timer(root=root, label=timer_value)
+
+#2. 嘗試將label背景顏色變更用function執行
+# def bg_color_change(label):
+#     label.config(bg= "blue", )
+#     label.after(50, lambda: label.config(bg='white'))
+ # 復歸function加入 # bg_color_change(timer_value)
+# def time_left_restart():
+#     global time_left
+#     time_left =61
+#     # bg_color_change(timer_value)
+#     timer_value.config(bg= "blue", fg="white")
+#     timer_value.after(500, lambda: timer_value.config(bg='white', fg="black"))
+# #分隔線(本來預計使用canvas畫上下框線，但調整後底色色塊難以調整)
+# canvas.create_line()
+# canvas.create_line(0,100,200, 100, width=10)
+# canvas.grid(row=1, column=0)
+
+
+計算分數方法的方案
+    #方案2. list交集法: 比較2個序列間的差異值 
+    #但ChatGPT提供的code會刪掉重複的
+    # list1 = [1, 2, 3, 4, 5]
+    # list2 = [3, 4, 5, 6, 7]
+
+    # set1 = set(list1)
+    # set2 = set(list2)
+
+    # print(set1.difference(set2))
+    # print(set2.difference(set1))
+    # >>> 產生
+    # {1, 2}
+    # {6, 7}
+    # set集合會造成重複字體非重複文字無法確認是否輸入正確，但如果不用set會出現錯誤 AttributeError: 'list' object has no attribute 'difference'
+
+    
+    #方案1. 直述式: 直接用if比對差異數
+    # entring_text = entry_box.get()
+    # char_count = len(entring_text)
+    # position_in_text = char_count-1
+    # print(f"Number of characters entered: {char_count}")
+    # if test_text[position_in_sentence][position_in_text] == entring_text[-1]:
+    #     print(correct_char)
+    #     correct_char += 1
+    #     realtime_cpm_value = correct_char/((original_time_left - time_left)/60)
+    #     print("correct: ", correct_char)
+    #     corrected_cpm_value.config(text=realtime_cpm_value)
+    
+    # else:
+    #     correct_char-=1
+    #     print(correct_char)
+        
+    #測試用try去除IndexError    
+    # try except else finally
+    
+     # try: 
+    # except IndexError:
+    # IndexError: string index out of range
+    #     Message("超過index")   
+             
+    
+#顏色顯示正確與否-----------------------------------------------------------------------------
+    # text_area.tag_add("blue", 1.0, 1.5)
+# text_area.tag_add("red",1.2)
+# text_area.tag_add("red", 1.5)
+
+
+chage_color_index = 0
+#先嘗試不管輸入什麼，文字顏色都會變更
+def change_text_color_blue(event):
+    global chage_color_index
+    # text_area.tag_remove("blue", "1.0", END) #刪除有這個tag的字元，
+    # 在這裡不需要，應該是會使用在按下backspace
+    position_in_testtext = len(" ".join(test_text[:position_in_sentence]))
+    chage_color_index = position_in_testtext+len(entry_box.get())-1
+    print(chage_color_index)
+    # text_area.tag_add("blue", "1.0", f'1.{chage_color_index}') #未使用tag_remove時，就不用從第1個位置開始計算
+    text_area.tag_add("blue", f'1.{chage_color_index}')
+    text_area.tag_config("blue", background="blue",foreground="white")
+    #TODO 要新增超過這個sentence時，未按下空白鍵跳到下個sentence時，不會變色
+   
+    
+    # text_number = 1. + str(chage_color_index)
+    # text_area.tag_add("blue", text_number)
+    # text_area.tag_config("blue", foreground="blue")
+    
+    
+def chage_text_color_Red(event):
+    '''測試輸入某個值時會顯示紅色'''
+    global chage_color_index
+    # text_area.tag_remove("red", "1.0", END)
+    text_area.tag_add("red", f'1.{chage_color_index}')
+    text_area.tag_config("red", background="red",foreground="white")
+    chage_color_index += 1
+    
+def chage_text_color_White(event):
+    global chage_color_index
+    # text_area.tag_remove("red", "1.0", END)
+    text_area.tag_add("red", f'1.{chage_color_index}')
+    text_area.tag_config("red", background="red",foreground="white")
+    chage_color_index +=1
+
+# 
+# 方法一: 使用.see() 套件
+
+# text_widget.see("10.0")
+
+# `.see()`方法可以用於將`Text`小部件的視圖滾動到指定的位置。你可以使用`.see(index)`來捲動視圖以使指定的索引處的文本可見。
+
+# 以下是一個示例，展示了如何使用`.see()`方法跳到`Text`小部件中特定字元的位置：
+
+# ```python
+# import tkinter as tk
+
+# def jump_to_index():
+#     index = entry.get()
+#     text.see(index)
+
+# root = tk.Tk()
+
+# text = tk.Text(root)
+# text.pack()
+
+# entry = tk.Entry(root)
+# entry.pack()
+
+# button = tk.Button(root, text="Jump", command=jump_to_index)
+# button.pack()
+
+# root.mainloop()
+# ```
+
+# 在這個例子中，我們創建了一個`Text`小部件、一個`Entry`小部件和一個`Button`小部件。你可以在`Entry`小部件中輸入要跳到的索引位置，然後按下"Jump"按鈕，視圖將滾動到指定的索引處。
+
+# 注意，索引的格式應為"行號.列號"，例如"1.0"表示第一行的開始位置。
+
+# 希望這能幫助到你！如果你有其他問題，請隨時問我。
+
+    
+#方法二、 使用bbox(index)偵測 字符串的矩形邊界，確認是否接近邊界值，如果是則使用yview()滾動頁面一行
+# index 返回的值是(x,y,width, height)的tuple值
+
+# 要偵測在 `Text` 文字框中最靠右邊的位置，你可以使用 `.bbox()` 方法。這個方法可以取得指定索引位置的文字區域的邊界框資訊，包括左上角座標和右下角座標。
+
+# 下面是一個例子，演示了如何偵測最靠右邊的位置並向下捲動一格：
+
+# ```python
+# import tkinter as tk
+
+# def scroll_if_at_right_end(event):
+#     text_widget = event.widget
+#     index = "insert"
+#     bbox = text_widget.bbox(index)
+#     if bbox and bbox[2] == text_widget.winfo_width():
+#         text_widget.yview_scroll(1, "units")
+
+# root = tk.Tk()
+
+# text_widget = tk.Text(root)
+# text_widget.pack()
+
+# text_widget.bind("<Key>", scroll_if_at_right_end)
+
+# root.mainloop()
+# ```
+
+# 在上面的例子中，我們創建了一個 `Text` 小部件並將其放置在視窗中。然後，我們綁定了 `<Key>` 事件到 `scroll_if_at_right_end` 函數上。當鍵盤事件觸發時，該函數會檢查最後輸入的文字是否在最右邊，如果是的話，就使用 `yview_scroll()` 方法向下捲動一格。
+
+# 你可以根據需要進一步調整捲動的行數和觸發捲動的事件。
